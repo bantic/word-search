@@ -21,6 +21,7 @@ export default Component.extend({
 
   actions: {
     toggleSquare(row, column) {
+      debugger;
       this.wordSearch.toggleSelect(row, column);
       this._updateProperties();
     }

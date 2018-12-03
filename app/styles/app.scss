@@ -1,0 +1,36 @@
+@import 'tailwind.css';
+
+.word-search-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 75px);
+  grid-template-rows: repeat(5, 75px);
+}
+
+.word-search-square {
+  background-color: lightblue;
+  outline: 2px solid darkblue;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.word-search-square-dice {
+  border: 2px solid darkblue;
+  border-radius: 20px;
+  width: 80%;
+  height: 80%;
+  text-align: center;
+  line-height: 60px;
+  background: #fff;
+  font-size: 33px;
+  font-family: 'Helvetica', sans-serif;
+}
+
+.word-search-square.selectable .word-search-square-dice {
+  background-color: blue;
+}
+
+.word-search-square.selected .word-search-square-dice {
+  background-color: gray;
+}

@@ -35,7 +35,7 @@ class Grid {
 
   fromIndex(index) {
     let row = Math.floor(index / this.size);
-    let column = index - row;
+    let column = index - row * this.size;
     return { row, column };
   }
 
