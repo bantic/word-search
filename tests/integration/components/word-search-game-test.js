@@ -13,14 +13,5 @@ module('Integration | Component | word-search-game', function(hooks) {
     await render(hbs`{{word-search-game}}`);
 
     assert.equal(this.element.textContent.trim(), '');
-
-    // Template block usage:
-    await render(hbs`
-      {{#word-search-game}}
-        template block text
-      {{/word-search-game}}
-    `);
-
-    assert.equal(this.element.textContent.trim(), 'template block text');
   });
 });

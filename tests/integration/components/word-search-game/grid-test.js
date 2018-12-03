@@ -13,14 +13,5 @@ module('Integration | Component | word-search-game/grid', function(hooks) {
     await render(hbs`{{word-search-game/grid}}`);
 
     assert.equal(this.element.textContent.trim(), '');
-
-    // Template block usage:
-    await render(hbs`
-      {{#word-search-game/grid}}
-        template block text
-      {{/word-search-game/grid}}
-    `);
-
-    assert.equal(this.element.textContent.trim(), 'template block text');
   });
 });

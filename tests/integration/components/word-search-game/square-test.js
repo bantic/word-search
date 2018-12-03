@@ -13,14 +13,5 @@ module('Integration | Component | word-search-game/square', function(hooks) {
     await render(hbs`{{word-search-game/square}}`);
 
     assert.equal(this.element.textContent.trim(), '');
-
-    // Template block usage:
-    await render(hbs`
-      {{#word-search-game/square}}
-        template block text
-      {{/word-search-game/square}}
-    `);
-
-    assert.equal(this.element.textContent.trim(), 'template block text');
   });
 });
