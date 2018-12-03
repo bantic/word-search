@@ -90,7 +90,7 @@ class Game {
         return new Square({
           letter,
           row: Math.floor(index / this.size),
-          column: index - Math.floor(index / this.size),
+          column: index - this.size * Math.floor(index / this.size),
           selectable: true
         });
       }),

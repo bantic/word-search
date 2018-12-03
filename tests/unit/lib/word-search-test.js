@@ -22,6 +22,16 @@ module('Unit | Lib | word-search', function(/* hooks */) {
       }
     }
   });
+  test('squares have rows and columns', function(assert) {
+    let g = new Game();
+    assert.equal(g.squares.at(0, 0).row, 0);
+    assert.equal(g.squares.at(1, 0).row, 1);
+    assert.equal(g.squares.at(2, 0).row, 2);
+
+    assert.equal(g.squares.at(1, 0).column, 0);
+    assert.equal(g.squares.at(1, 1).column, 1);
+    assert.equal(g.squares.at(1, 2).column, 2);
+  });
   test('selectable squares update after selection', function(assert) {
     let g = new Game(LETTERS);
     g.toggleSelect(0, 0);
