@@ -4,14 +4,34 @@
       {{game.grid}}
     </div>
     <div class="game-details-container ml-12">
-      Current word:<br>
-      {{game.currentPath}}
-      <button {{action game.submit}}>Submit</button>
-      <button {{action game.clear}}>Clear</button>
-      <br>
-      Score: {{game.score}}.
-      <h3>Words</h3>
-      <ul>
+      <h3 class="mb-2">Current word:</h3>
+      <div>
+        {{#if game.currentPath}}
+          {{game.currentPath}}
+        {{else}}
+          <em>None</em>
+        {{/if}}
+      </div>
+      <div class="game-actions mt-8 mb-8">
+        <button
+          class="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 border border-blue-darker rounded"
+          disabled={{not game.currentPath}}
+          {{action game.submit}}
+        >
+          Submit
+        </button>
+        <button
+          class="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 border border-blue-darker rounded"
+          {{action game.clear}}
+        >
+          Clear
+        </button>
+      </div>
+
+      <h3 class="mt-8">{{game.score}} points</h3>
+
+      <h3 class="mt-8 mb-4">Words</h3>
+      <ul class="list-reset">
         {{#each game.words as |word|}}
           <li>{{word}}</li>
         {{else}}
