@@ -93,4 +93,20 @@ module('Unit | Lib | word-search', function(/* hooks */) {
     assert.ok(g.isSelectable(1, 1), '1,1 is selectable');
     assert.ok(g.isSelectable(1, 0), '1,0 is selectable');
   });
+  test('calling toggleSelect on a square outside the selectable area clears the board', function(assert) {
+    let g = new Game();
+    g.toggleSelect(0, 0);
+
+    assert.equal(g.selectedSquares.length, 1);
+
+    g.toggleSelect(2, 2);
+
+    assert.equal(g.selectedSquares.length, 0);
+
+    g.toggleSelect(0, 0);
+    g.toggleSelect(0, 1);
+    assert.equal(g.selectedSquares.length, 2);
+    g.toggleSelect(0, 0);
+    assert.equal(g.selectedSquares.length, 0);
+  });
 });

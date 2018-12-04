@@ -1,5 +1,7 @@
 import Component from '@ember/component';
-import WordSearch from '../lib/word-search';
+import WordSearch, { scoreFor } from '../lib/word-search';
+import { computed } from '@ember/object';
+import { inject } from '@ember/service';
 
 function dup(arrOfObjects) {
   return arrOfObjects.map(o => {
@@ -8,6 +10,14 @@ function dup(arrOfObjects) {
 }
 
 export default Component.extend({
+  dictionary: inject(),
+
+  score: 0,
+
+  words: computed(function() {
+    return [];
+  }),
+
   init() {
     this._super(...arguments);
     this.wordSearch = new WordSearch();
@@ -23,6 +33,21 @@ export default Component.extend({
     toggleSquare(row, column) {
       this.wordSearch.toggleSelect(row, column);
       this._updateProperties();
+    },
+
+    clear() {
+      this.wordSearch.clear();
+      this._updateProperties();
+    },
+
+    submit() {
+      let word = this.get('currentPath');
+      if (this.get('dictionary').validate(word)) {
+        this.set('score', this.get('score') + scoreFor(word));
+        this.wordSearch.clear();
+        this._updateProperties();
+        this.set('words', [word, ...this.get('words')]);
+      }
     }
   }
 });

@@ -1,5 +1,18 @@
 {{#word-search-game as |game|}}
   {{game.grid}}
   <hr>
+  Current word:<br>
   {{game.currentPath}}
+  <button {{action game.submit}}>Submit</button>
+  <button {{action game.clear}}>Clear</button>
+  <br>
+  Score: {{game.score}}.
+  <h3>Words</h3>
+  <ul>
+    {{#each game.words as |word|}}
+      <li>{{word}}</li>
+    {{else}}
+      <li><em>None yet</em></li>
+    {{/each}}
+  </ul>
 {{/word-search-game}}

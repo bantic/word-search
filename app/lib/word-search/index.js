@@ -8,6 +8,23 @@ function generateLettersArray() {
     });
 }
 
+function scoreFor(word) {
+  if (word.length <= 4) {
+    return 1;
+  } else {
+    switch (word.length) {
+      case 5:
+        return 2;
+      case 6:
+        return 3;
+      case 7:
+        return 5;
+      default:
+        return 11;
+    }
+  }
+}
+
 class Square {
   constructor({ letter, row, column, active, selected, selectable }) {
     this.letter = letter;
@@ -106,21 +123,27 @@ class Game {
     return this.squares.toArray().filter(s => s.selectable);
   }
 
-  isSelectable(row, column) {
-    return this.selectableSquares.includes(this.squares.at(row, column));
-  }
-
   toggleSelect(row, column) {
     let square = this.squares.at(row, column);
-    if (square.selected) {
-      this._unselect(square);
-    } else if (square.selectable) {
+    if (this.isSelectable(row, column)) {
       this._select(square);
+    } else if (square === this.stack.head) {
+      this._unselect(square);
     } else {
-      throw new Error(
-        `Tried to toggle selection of unselected, unselectable square`
-      );
+      this.clear();
     }
+  }
+
+  clear() {
+    this.stack = new Stack();
+    this.squares.toArray().forEach(s => {
+      s.selected = false;
+      s.selectable = true;
+    });
+  }
+
+  isSelectable(row, column) {
+    return this.selectableSquares.includes(this.squares.at(row, column));
   }
 
   _unselect(square) {
@@ -162,4 +185,5 @@ class Game {
   }
 }
 
+export { scoreFor };
 export default Game;
