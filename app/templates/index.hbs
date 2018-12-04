@@ -1,9 +1,9 @@
-<div class="container mx-auto pt-2 flex">
+<div class="container mx-auto pt-12 flex">
   {{#word-search-game as |game|}}
-    <div class="game-grid-container">
+    <div class="game-grid-container border-2 border-grey-darkest rounded">
       {{game.grid}}
     </div>
-    <div class="game-details-container">
+    <div class="game-details-container ml-12">
       Current word:<br>
       {{game.currentPath}}
       <button {{action game.submit}}>Submit</button>
