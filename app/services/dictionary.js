@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import Service from '@ember/service';
 import { run } from '@ember/runloop';
 import { Promise } from 'rsvp';

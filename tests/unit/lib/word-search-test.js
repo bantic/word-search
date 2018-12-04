@@ -34,6 +34,7 @@ module('Unit | Lib | word-search', function(/* hooks */) {
   });
   test('selectable squares update after selection', function(assert) {
     let g = new Game(LETTERS);
+
     g.toggleSelect(0, 0);
 
     assert.equal(
@@ -46,7 +47,7 @@ module('Unit | Lib | word-search', function(/* hooks */) {
     assert.ok(g.isSelectable(1, 1), '1,1 is selectable');
     assert.ok(g.isSelectable(1, 0), '1,0 is selectable');
 
-    assert.equal(g.stack.toString(), 'A');
+    assert.equal(g.currentPath, 'A');
 
     g.toggleSelect(0, 1);
     assert.equal(
@@ -54,7 +55,7 @@ module('Unit | Lib | word-search', function(/* hooks */) {
       4,
       'selectable squares are updated again'
     );
-    assert.equal(g.stack.toString(), 'AB');
+    assert.equal(g.currentPath, 'AB');
 
     assert.ok(!g.isSelectable(0, 0), '0,0 is not selectable');
     assert.ok(!g.isSelectable(0, 1), '0,1 is not selectable');
@@ -73,14 +74,14 @@ module('Unit | Lib | word-search', function(/* hooks */) {
       0,
       'no squares selected'
     );
-    assert.equal(g.stack.toString(), '');
+    assert.equal(g.currentPath, null);
 
     g.toggleSelect(0, 0);
     g.toggleSelect(0, 1);
     g.toggleSelect(0, 2);
-    assert.equal(g.stack.toString(), 'ABC');
+    assert.equal(g.currentPath, 'ABC');
     g.toggleSelect(0, 2);
-    assert.equal(g.stack.toString(), 'AB');
+    assert.equal(g.currentPath, 'AB');
     assert.equal(
       g.selectableSquares.length,
       4,
@@ -108,5 +109,48 @@ module('Unit | Lib | word-search', function(/* hooks */) {
     assert.equal(g.selectedSquares.length, 2);
     g.toggleSelect(0, 0);
     assert.equal(g.selectedSquares.length, 0);
+  });
+  test('selectLetter', function(assert) {
+    let g = new Game(LETTERS);
+    assert.equal(g.selectedSquares.length, 0);
+
+    g.selectLetter('A');
+    assert.equal(g.selectedSquares.length, 1);
+    assert.equal(
+      g.selectableSquares.length,
+      3,
+      'the 3 squares around the A are selectable'
+    );
+  });
+  test('selectLetter when multiple letters match', function(assert) {
+    let letters = LETTERS.slice();
+    letters[4] = 'A'; // swap "E" at 0,4 for an extra "A"
+
+    let g = new Game(letters);
+    assert.equal(g.selectedSquares.length, 0);
+    g.selectLetter('A');
+
+    assert.equal(g.paths.length, 2, '2 paths');
+    assert.equal(g.selectedSquares.length, 2, '2 selected squares');
+    assert.equal(g.activeSquares.length, 2, '2 active squares');
+    assert.equal(
+      g.selectableSquares.length,
+      6,
+      'the 3 squares around each A are selectable'
+    );
+  });
+  test('selectLetter with multiple paths when letter excludes path', function(assert) {
+    let letters = LETTERS.slice();
+    letters[4] = 'A'; // swap "E" at 0,4 for an extra "A"
+
+    let g = new Game(letters);
+    assert.equal(g.selectedSquares.length, 0);
+    g.selectLetter('A');
+
+    g.selectLetter('B');
+    assert.equal(g.paths.length, 1, 'path collapsed');
+    assert.equal(g.currentPath, 'AB');
+    assert.equal(g.activeSquares.length, 1, '1 active square');
+    assert.equal(g.selectedSquares.length, 2, '2 selected squares');
   });
 });
