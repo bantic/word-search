@@ -1,5 +1,6 @@
 import Service from '@ember/service';
 import { run } from '@ember/runloop';
+import { Promise } from 'rsvp';
 
 export default Service.extend({
   init() {
@@ -22,7 +23,7 @@ export default Service.extend({
 
   validate(word) {
     word = word.toLowerCase();
-    return new Ember.RSVP.Promise(resolve => {
+    return new Promise(resolve => {
       this.pendingValidations[word] = resolve;
       this.worker.postMessage(['validate', word]);
     });
