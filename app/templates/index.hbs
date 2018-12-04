@@ -1,18 +1,23 @@
-{{#word-search-game as |game|}}
-  {{game.grid}}
-  <hr>
-  Current word:<br>
-  {{game.currentPath}}
-  <button {{action game.submit}}>Submit</button>
-  <button {{action game.clear}}>Clear</button>
-  <br>
-  Score: {{game.score}}.
-  <h3>Words</h3>
-  <ul>
-    {{#each game.words as |word|}}
-      <li>{{word}}</li>
-    {{else}}
-      <li><em>None yet</em></li>
-    {{/each}}
-  </ul>
-{{/word-search-game}}
+<div class="container mx-auto pt-2 flex">
+  {{#word-search-game as |game|}}
+    <div class="game-grid-container">
+      {{game.grid}}
+    </div>
+    <div class="game-details-container">
+      Current word:<br>
+      {{game.currentPath}}
+      <button {{action game.submit}}>Submit</button>
+      <button {{action game.clear}}>Clear</button>
+      <br>
+      Score: {{game.score}}.
+      <h3>Words</h3>
+      <ul>
+        {{#each game.words as |word|}}
+          <li>{{word}}</li>
+        {{else}}
+          <li><em>None yet</em></li>
+        {{/each}}
+      </ul>
+    </div>
+  {{/word-search-game}}
+</div>

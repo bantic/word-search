@@ -10,6 +10,7 @@ function dup(arrOfObjects) {
 }
 
 export default Component.extend({
+  tagName: '',
   dictionary: inject(),
 
   score: 0,
