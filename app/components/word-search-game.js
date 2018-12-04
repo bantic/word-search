@@ -22,6 +22,7 @@ export default Component.extend({
     this._super(...arguments);
     this.wordSearch = new WordSearch();
     this._updateProperties();
+    this.get('dictionary').load();
   },
 
   _updateProperties() {
@@ -42,12 +43,18 @@ export default Component.extend({
 
     submit() {
       let word = this.get('currentPath');
-      if (this.get('dictionary').validate(word)) {
-        this.set('score', this.get('score') + scoreFor(word));
-        this.wordSearch.clear();
-        this._updateProperties();
-        this.set('words', [word, ...this.get('words')]);
-      }
+      this.get('dictionary')
+        .validate(word)
+        .then(res => {
+          if (res) {
+            this.set('score', this.get('score') + scoreFor(word));
+            this.set('words', [word, ...this.get('words')]);
+          } else {
+            console.log('word', word, 'is not valid');
+          }
+          this.wordSearch.clear();
+          this._updateProperties();
+        });
     }
   }
 });
